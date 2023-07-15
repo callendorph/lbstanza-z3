@@ -156,6 +156,20 @@ Longest Running Tests:
 
 This project uses the tool defined in [lbstanza-wrappers](https://github.com/callendorph/lbstanza-wrappers) to generate the C function wrappers and the enumeration definitions.
 
+Setup a python venv:
+
+```
+$> sudo apt install python3-venv
+$> python -m venv venv
+$> source venv/bin/activate
+$> pip install lbstanza-wrappers
+```
+
+Then you can make the wrappers by invoking:
+
+```
+$> make -f Makefile.linux wrapper
+```
 
 ## Writing a solver
 
@@ -172,4 +186,3 @@ The `Shellable` provides a means of implementing different scopes:
 
 The asserts inside the `within` body will only apply during that scope. Once we leave
 that scope, they will be removed from the stack of constraints.
-
