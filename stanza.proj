@@ -1,16 +1,21 @@
 packages z3/* defined-in "src/"
 packages z3/tests/* defined-in "tests/"
 
-package z3/Context requires :
-  ; ccfiles :
-  ;   "./release/libz3.a"
+package z3/Wrapper requires :
+  dynamic-libraries:
+    on-platform:
+      windows: "libz3.dll"
+      os-x: "libz3.dylib"
+      linux: "libz3.so"
   ccflags :
-    "-I./release/include"
+    on-platform:
+      windows: "-I./release/include"
+      linux: ""
+
 
 build main :
   inputs:
     z3/Context
-  ;flags: COMPILE-STATIC
   pkg: "pkgs"
 
 build-test z3-tests :
@@ -27,6 +32,4 @@ build-test z3-tests :
     z3/tests/Tactics
     z3/tests/Complex
   pkg: "test-pkgs"
-  ;flags: COMPILE-STATIC
   o: "z3-tests"
-

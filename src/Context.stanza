@@ -10,7 +10,6 @@ public defenum Z3RefTypes:
   MODEL_REF
   FUNC_INTERP_REF
   FUNC_ENTRY_REF
-  PARSER_CTX_REF
   GOAL_REF
   TACTIC_REF
   PROBE_REF
@@ -69,7 +68,6 @@ public lostanza defn get-inc-func (t:ref<Z3RefTypes>) -> (ptr<((ptr<?>, ptr<?>) 
     (_:ref<MODEL_REF>): return addr(w_Z3_model_inc_ref)
     (_:ref<FUNC_INTERP_REF>): return addr(w_Z3_func_interp_inc_ref)
     (_:ref<FUNC_ENTRY_REF>): return addr(w_Z3_func_entry_inc_ref)
-    (_:ref<PARSER_CTX_REF>): return addr(w_Z3_parser_context_inc_ref)
     (_:ref<GOAL_REF>): return addr(w_Z3_goal_inc_ref)
     (_:ref<TACTIC_REF>): return addr(w_Z3_tactic_inc_ref)
     (_:ref<PROBE_REF>): return addr(w_Z3_probe_inc_ref)
@@ -90,7 +88,6 @@ public lostanza defn get-dec-func (t:ref<Z3RefTypes>) -> (ptr<((ptr<?>, ptr<?>) 
     (_:ref<MODEL_REF>): return addr(w_Z3_model_dec_ref)
     (_:ref<FUNC_INTERP_REF>): return addr(w_Z3_func_interp_dec_ref)
     (_:ref<FUNC_ENTRY_REF>): return addr(w_Z3_func_entry_dec_ref)
-    (_:ref<PARSER_CTX_REF>): return addr(w_Z3_parser_context_dec_ref)
     (_:ref<GOAL_REF>): return addr(w_Z3_goal_dec_ref)
     (_:ref<TACTIC_REF>): return addr(w_Z3_tactic_dec_ref)
     (_:ref<PROBE_REF>): return addr(w_Z3_probe_dec_ref)
