@@ -7,10 +7,10 @@ package z3/Wrapper requires :
       windows: "libz3.dll"
       os-x: "libz3.dylib"
       linux: "libz3.so"
-  ccflags :
-    on-platform:
-      windows: "-I./release/include"
-      linux: ""
+  ; ccflags :
+  ;   on-platform:
+  ;     windows: "-I./release/include"
+  ;     linux: ""
 
 
 build main :
