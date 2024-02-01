@@ -1,4 +1,11 @@
+
+# execute all lines of a target in one shell
+.ONESHELL:
+
 all: build
+
+.conan2/profiles/default:
+	[ ! -e .conan2/profiles/default ] && conan profile detect
 
 tests: z3-tests
 	./z3-tests
@@ -13,8 +20,11 @@ z3-tests: src/*.stanza tests/*.stanza conan-z3-static
 	stanza build z3-tests
 
 
-conan-z3-shared:
-	SLM_BUILD_SHARED=1 ./build_conan.sh
+conan-z3-shared: .conan2/profiles/default
+	export CONAN_HOME=$$PWD/.conan2
+	conan config install conan-config
+	export SLM_BUILD_SHARED=1
+	conan install --deployer=lbstanza_deployer --generator=LBStanzaGenerator -vtrace .
 
 conan-z3-static:
 	SLM_BUILD_STATIC=1 ./build_conan.sh

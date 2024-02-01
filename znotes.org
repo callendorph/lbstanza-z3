@@ -1,0 +1,224 @@
+
+* slm conan z3 build
+  :PROPERTIES:
+  :header-args:          :results output
+  :header-args:shell:    :dir ~/dev/lbstanza-z3
+  :END:
+
+** build
+
+#+begin_src shell
+  export SLM_BUILD_SHARED=true
+  unset SLM_BUILD_STATIC
+  ./build_conan.sh
+  unset SLM_BUILD_SHARED
+  export SLM_BUILD_STATIC=true
+  ./build_conan.sh
+#+end_src
+
+#+RESULTS:
+#+begin_example
+/home/jwatson/dev/lbstanza-z3/venv/bin/conan
+Host profile:
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu17
+compiler.libcxx=libstdc++11
+compiler.version=11
+os=Linux
+
+Build profile:
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu17
+compiler.libcxx=libstdc++11
+compiler.version=11
+os=Linux
+
+LibZ3: Building Shared Library
+removed './build/content/libz3.so'
+'./build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.so' -> './build/content/libz3.so'
+removed './build/content/libz3.so.4.12'
+'./build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.so.4.12' -> './build/content/libz3.so.4.12'
+'./build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.so.4.12.2.0' -> './build/content/libz3.so.4.12.2.0'
+LibZ3: Build Complete
+/home/jwatson/dev/lbstanza-z3/venv/bin/conan
+Host profile:
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu17
+compiler.libcxx=libstdc++11
+compiler.version=11
+os=Linux
+
+Build profile:
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu17
+compiler.libcxx=libstdc++11
+compiler.version=11
+os=Linux
+
+LibZ3: Building Static Library
+'./build/static/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.a' -> './build/content/libz3.a'
+LibZ3: Build Complete
+#+end_example
+
+** output
+
+#+begin_src shell
+  ls -l build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/*.so* \
+        build/static/full_deploy/host/z3/4.12.2/Release/x86_64/lib/*.a \
+        build/{shared,static}/full_deploy/host/z3/4.12.2/Release/x86_64/include/*.h \
+        build/{shared,static}/full_deploy/host/z3/4.12.2/Release/x86_64/bin/z3
+  export CONAN_HOME=$PWD/.conan2
+  Z3_PKG=$(conan list 'z3/*' --f compact | head -2 | tail -1 | xargs)
+  conan list 'z3/*:*' --f compact
+  # shared=False
+  ls -l $(conan cache path 'z3/4.12.2#1656786b1e9d82e0a0d091fd3b72fb07:01fdf397e9a6531211f1a4cf77be596c70a03c0c')/lib/*.a
+  # shared=True
+  ls -l $(conan cache path 'z3/4.12.2#1656786b1e9d82e0a0d091fd3b72fb07:60a3d9e0b3559fae5b65b8c5dfe6d2a4531e0eab')/lib/*.so*
+#+end_src
+
+#+RESULTS:
+#+begin_example
+-rwxr-xr-x 1 jwatson jwatson 31287288 Dec 31 17:05 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/bin/z3
+-rw-r--r-- 1 jwatson jwatson     7193 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_algebraic.h
+-rw-r--r-- 1 jwatson jwatson   264095 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_api.h
+-rw-r--r-- 1 jwatson jwatson     5735 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_ast_containers.h
+-rw-r--r-- 1 jwatson jwatson    14123 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_fixedpoint.h
+-rw-r--r-- 1 jwatson jwatson    36516 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_fpa.h
+-rw-r--r-- 1 jwatson jwatson      514 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3.h
+-rw-r--r-- 1 jwatson jwatson   193408 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3++.h
+-rw-r--r-- 1 jwatson jwatson      389 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_macros.h
+-rw-r--r-- 1 jwatson jwatson    12312 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_optimization.h
+-rw-r--r-- 1 jwatson jwatson     1056 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_polynomial.h
+-rw-r--r-- 1 jwatson jwatson     5976 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_rcf.h
+-rw-r--r-- 1 jwatson jwatson     3901 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_spacer.h
+-rw-r--r-- 1 jwatson jwatson     2220 May 12  2023 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_v1.h
+-rw-r--r-- 1 jwatson jwatson      212 Dec 31 16:46 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_version.h
+lrwxrwxrwx 1 jwatson jwatson       13 Jan 26 10:32 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.so -> libz3.so.4.12
+lrwxrwxrwx 1 jwatson jwatson       17 Jan 26 10:32 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.so.4.12 -> libz3.so.4.12.2.0
+-rw-r--r-- 1 jwatson jwatson 31792952 Dec 31 17:05 build/shared/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.so.4.12.2.0
+-rwxr-xr-x 1 jwatson jwatson 31287288 Dec 31 16:42 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/bin/z3
+-rw-r--r-- 1 jwatson jwatson     7193 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_algebraic.h
+-rw-r--r-- 1 jwatson jwatson   264095 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_api.h
+-rw-r--r-- 1 jwatson jwatson     5735 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_ast_containers.h
+-rw-r--r-- 1 jwatson jwatson    14123 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_fixedpoint.h
+-rw-r--r-- 1 jwatson jwatson    36516 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_fpa.h
+-rw-r--r-- 1 jwatson jwatson      514 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3.h
+-rw-r--r-- 1 jwatson jwatson   193408 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3++.h
+-rw-r--r-- 1 jwatson jwatson      389 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_macros.h
+-rw-r--r-- 1 jwatson jwatson    12312 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_optimization.h
+-rw-r--r-- 1 jwatson jwatson     1056 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_polynomial.h
+-rw-r--r-- 1 jwatson jwatson     5976 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_rcf.h
+-rw-r--r-- 1 jwatson jwatson     3901 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_spacer.h
+-rw-r--r-- 1 jwatson jwatson     2220 May 12  2023 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_v1.h
+-rw-r--r-- 1 jwatson jwatson      212 Dec 31 16:21 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/include/z3_version.h
+-rw-r--r-- 1 jwatson jwatson 74666474 Dec 31 16:42 build/static/full_deploy/host/z3/4.12.2/Release/x86_64/lib/libz3.a
+Local Cache
+  z3/4.12.2
+    z3/4.12.2#1656786b1e9d82e0a0d091fd3b72fb07%1704057362.124 (2023-12-31 21:16:02 UTC)
+      z3/4.12.2#1656786b1e9d82e0a0d091fd3b72fb07:01fdf397e9a6531211f1a4cf77be596c70a03c0c
+        settings: Linux, x86_64, Release, gcc, 17, libstdc++11, 11
+        options: fPIC=True, multithreaded=True, shared=False, use_gmp=False
+      z3/4.12.2#1656786b1e9d82e0a0d091fd3b72fb07:60a3d9e0b3559fae5b65b8c5dfe6d2a4531e0eab
+        settings: Linux, x86_64, Release, gcc, 17, libstdc++11, 11
+        options: multithreaded=True, shared=True, use_gmp=False
+-rw-r--r-- 1 jwatson jwatson 74666474 Dec 31 16:42 /home/jwatson/dev/lbstanza-z3/.conan2/p/z35567b13736a7a/p/lib/libz3.a
+lrwxrwxrwx 1 jwatson jwatson       13 Jan 26 10:32 /home/jwatson/dev/lbstanza-z3/.conan2/p/z3cdae7479aec8d/p/lib/libz3.so -> libz3.so.4.12
+lrwxrwxrwx 1 jwatson jwatson       17 Jan 26 10:32 /home/jwatson/dev/lbstanza-z3/.conan2/p/z3cdae7479aec8d/p/lib/libz3.so.4.12 -> libz3.so.4.12.2.0
+-rw-r--r-- 1 jwatson jwatson 31792952 Dec 31 17:05 /home/jwatson/dev/lbstanza-z3/.conan2/p/z3cdae7479aec8d/p/lib/libz3.so.4.12.2.0
+#+end_example
+
+** custom deployer
+
+#+begin_src shell :session deployer
+  source $PWD/venv/bin/activate
+  export NO_COLOR=1
+  export CONAN_HOME=$PWD/.conan2
+  conan install . --deployer=my_custom_deployer -vtrace
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+(venv) jwatson@jwjitx:~/dev/lbstanza-z3$ (venv) jwatson@jwjitx:~/dev/lbstanza-z3$ 
+======== Input profiles ========
+Profile host:
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu17
+compiler.libcxx=libstdc++11
+compiler.version=11
+os=Linux
+
+Profile build:
+[settings]
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu17
+compiler.libcxx=libstdc++11
+compiler.version=11
+os=Linux
+
+
+======== Computing dependency graph ========
+Graph root
+    conanfile.py (stanza-z3/None): /home/jwatson/dev/lbstanza-z3/conanfile.py
+Requirements
+1656786b1e9d82e0a0d091fd3b72fb07 - Cache
+Build requirements
+92f79424d7b65b12a84a2180866c3a78 - Cache
+Resolved version ranges
+=3.16 <4]: cmake/3.28.1
+
+======== Computing necessary packages ========
+z3/4.12.2: Checking 5 compatible configurations
+z3/4.12.2: Main binary package 'aa9d726be5fe3e26e97d6b07fbef6073fba9e655' missing. Using compatible package '01fdf397e9a6531211f1a4cf77be596c70a03c0c': compiler.cppstd=17
+Requirements
+1656786b1e9d82e0a0d091fd3b72fb07:01fdf397e9a6531211f1a4cf77be596c70a03c0c#09e78994541f69f278ad229e64fffb08 - Cache
+Build requirements
+92f79424d7b65b12a84a2180866c3a78:63fead0844576fc02943e16909f08fcdddd6f44b#501f62ef1d3711dd838dc1d91a2d866e - Skip
+
+======== Installing packages ========
+z3/4.12.2: Already installed! (1 of 1)
+WARN: deprecated: Usage of deprecated Conan 1.X features that will be removed in Conan 2.X:
+WARN: deprecated:     'cpp_info.filenames' used in: z3/4.12.2
+WARN: deprecated:     'cpp_info.names' used in: z3/4.12.2
+
+======== Finalizing install (deploy, generators) ========
+conanfile.py (stanza-z3/None): ---- inside my_custom_deployer.py deploy() ----
+conanfile.py (stanza-z3/None):   Dependency is direct=True: z3/4.12.2
+conanfile.py (stanza-z3/None): ----
+conanfile.py (stanza-z3/None): Writing generators to /home/jwatson/dev/lbstanza-z3
+conanfile.py (stanza-z3/None): Generator 'CMakeToolchain' calling 'generate()'
+conanfile.py (stanza-z3/None): CMakeToolchain generated: conan_toolchain.cmake
+=3.23
+-G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=/home/jwatson/dev/lbstanza-z3/conan_toolchain.cmake -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Release'
+conanfile.py (stanza-z3/None): CMakeToolchain generated: CMakePresets.json
+conanfile.py (stanza-z3/None): Generator 'CMakeDeps' calling 'generate()'
+conanfile.py (stanza-z3/None): CMakeDeps necessary find_package() and targets for your CMakeLists.txt
+    find_package(Z3)
+    target_link_libraries(... z3::libz3)
+conanfile.py (stanza-z3/None): Generating aggregated env files
+conanfile.py (stanza-z3/None): Generated aggregated env files: ['conanbuild.sh', 'conanrun.sh']
+Install finished successfully
+#+end_example
+
+** custom generators and deployers
+- use `conan config install` to install into conan directory
+- [CONAN_HOME]/extensions/generators
+- [CONAN_HOME]/extensions/deployers
+- Then you can use them by name in the recipes
