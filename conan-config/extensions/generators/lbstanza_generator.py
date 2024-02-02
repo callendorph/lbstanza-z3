@@ -12,18 +12,22 @@ class LBStanzaGenerator:
 
     def generate(self):
         self._conanfile.output.trace(f"---- LBStanzaGenerator.generate() ----")
-        
-        #self.output.trace(f"  opening output file \"{outfile}\"")
-        
-        for dep, _ in self._conanfile.dependencies.items():
-            self._conanfile.output.trace(f"  dep: {dep.ref.name}/{dep.ref.version}")
-            self._conanfile.output.trace(f"  TODO: project_dir paths for dep")
-              # package z3/Wrapper requires :
-              #   dynamic-libraries:
-              #     on-platform:
-              #       windows: "./build/content/libz3.dll"
-              #       linux: "./build/content/libz3.so"
-              #       os-x: "./build/content/libz3.dylib"
-              #   ccfiles: "./build/content/libz3.a"
-              #   ccflags: "-I./build/content/include"
+
+        outfile = "stanza-z3-wrapper.proj"
+        self._conanfile.output.trace(f"  opening output file \"{outfile}\"")
+
+        # TODO read actual library file names from package
+        with open(outfile, 'w') as f:
+            # note: use '\n' for line terminator on all platforms
+            f.write(f'package z3/Wrapper requires :\n')
+            f.write(f'  dynamic-libraries:\n')
+            f.write(f'    on-platform:\n')
+            f.write(f'      windows: "./deps/libs/libz3.dll"\n')
+            f.write(f'      linux: "./deps/libs/libz3.so"\n')
+            f.write(f'      os-x: "./deps/libs/libz3.dylib"\n')
+            f.write(f'  ccfiles: "./deps/libs/libz3.a"\n')
+            f.write(f'  ccflags: "-I./deps/include"\n')
+
+        #for dep, _ in self._conanfile.dependencies.items():
+            #self._conanfile.output.trace(f"  dep: {dep.ref.name}/{dep.ref.version}")
         self._conanfile.output.trace("----")

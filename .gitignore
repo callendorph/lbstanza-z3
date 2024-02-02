@@ -9,3 +9,6 @@ venv/
 build/
 
 z3full.h
+
+# generated
+stanza-z3-wrapper.proj
