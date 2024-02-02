@@ -25,7 +25,7 @@ conan-z3-shared: .conan2/profiles/default
 	conan config install conan-config
 	conan install -o shared=True --deployer=lbstanza_deployer --generator=LBStanzaGenerator -vtrace .
 
-conan-z3-static:
+conan-z3-static: .conan2/profiles/default
 	export CONAN_HOME=$$PWD/.conan2
 	conan config install conan-config
 	conan install -o shared=False --deployer=lbstanza_deployer --generator=LBStanzaGenerator -vtrace .
