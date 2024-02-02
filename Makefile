@@ -23,11 +23,12 @@ z3-tests: src/*.stanza tests/*.stanza conan-z3-static
 conan-z3-shared: .conan2/profiles/default
 	export CONAN_HOME=$$PWD/.conan2
 	conan config install conan-config
-	export SLM_BUILD_SHARED=1
-	conan install --deployer=lbstanza_deployer --generator=LBStanzaGenerator -vtrace .
+	conan install -o shared=True --deployer=lbstanza_deployer --generator=LBStanzaGenerator -vtrace .
 
 conan-z3-static:
-	SLM_BUILD_STATIC=1 ./build_conan.sh
+	export CONAN_HOME=$$PWD/.conan2
+	conan config install conan-config
+	conan install -o shared=False --deployer=lbstanza_deployer --generator=LBStanzaGenerator -vtrace .
 
 .PHONY: conan-z3-shared conan-z3-static
 

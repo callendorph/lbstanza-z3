@@ -41,15 +41,26 @@ class StanzaZ3Recipe(ConanFile):
   implements = ["auto_shared_fpic"]
 
   def requirements(self):
+    self.output.info("conanfile.py: requirements()")
+
     self.requires("z3/4.12.2")
 
+  def configure(self):
+    self.output.info("conanfile.py: configure()")
+
+    # set dependency shared value to match wrapper package
+    self.output.trace(f"---- setting dependency shared={self.options.shared}")
+    self.options["z3"].shared = self.options.shared
+
   #def generate(self):
+  #  self.output.info("conanfile.py: generate()")
   #  g = self.python_requires["conan_lbstanza_utils"].module.LBStanzaGenerator
   #  g.generate(self, "z3/Wrapper", "stanza-z3.proj")
 
-  # def build(self):
-  #   self.output.trace("---- build() ----")
-  #   v = self.python_requires["conan_lbstanza_utils"].module.myfunct()
-  #   self.output.trace(f"  v = {v}")
-  #   self.output.trace("----")
+  #def build(self):
+  #  self.output.info("conanfile.py: build()")
+  #  self.output.trace("---- build() ----")
+  #  v = self.python_requires["conan_lbstanza_utils"].module.myfunct()
+  #  self.output.trace(f"  v = {v}")
+  #  self.output.trace("----")
 
